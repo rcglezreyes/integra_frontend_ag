@@ -5,7 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from '@angular/router';
-import { ListUsersComponent } from '../list_users/list-users.component';
 import { DialogDeleteComponent } from '../dialog/dialog-delete.component';
 
 
@@ -15,7 +14,6 @@ import { DialogDeleteComponent } from '../dialog/dialog-delete.component';
   imports: [
     MatButtonModule,
     MatIconModule,
-    ListUsersComponent,
     DialogDeleteComponent
   ],
 })

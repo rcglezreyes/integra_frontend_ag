@@ -27,7 +27,8 @@ import { Router } from '@angular/router';
   ],
   providers: [
     UserService,
-    WebRequestService
+    WebRequestService,
+    { provide: MAT_DIALOG_DATA, useValue: {} }
   ],
   templateUrl: './dialog-delete.component.html',
   styleUrl: './dialog-delete.component.css'

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DialogDeleteComponent } from './dialog-delete.component';
 
 describe('DialogDeleteComponent', () => {
@@ -8,16 +8,19 @@ describe('DialogDeleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DialogDeleteComponent]
+      imports: [
+        DialogDeleteComponent,
+        HttpClientTestingModule
+      ]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(DialogDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 });

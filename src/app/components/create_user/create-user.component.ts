@@ -45,7 +45,7 @@ export class CreateUserComponent implements OnInit {
 
   data: any;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(public formBuilder: FormBuilder, private userService: UserService, private router: Router) {
 
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -82,7 +82,7 @@ export class CreateUserComponent implements OnInit {
     }
   }
 
-  private createNewUser(payload: Object): void {
+  createNewUser(payload: Object): void {
 
       this.userService.createNewUser(payload).subscribe({
           next: data => {
