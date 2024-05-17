@@ -80,7 +80,7 @@ export class UpdateUserComponent implements OnInit {
       last_name: [this.userToUpdate.lastName, Validators.required],
       email: this.email,
       user_status: [this.userToUpdate.userStatus, Validators.required],
-      department: [this.userToUpdate.department, Validators.required]
+      department: [this.userToUpdate.department]
     });
 
   }

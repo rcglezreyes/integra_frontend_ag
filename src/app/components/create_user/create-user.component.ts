@@ -61,7 +61,7 @@ export class CreateUserComponent implements OnInit {
       last_name: ['', Validators.required],
       email: this.email,
       user_status: ['', Validators.required],
-      department: ['', Validators.required]
+      department: ['']
     });
   }
 
