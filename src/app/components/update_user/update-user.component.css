@@ -1,0 +1,20 @@
+.form-container {
+  margin: 100px;
+}
+
+.top-padding {
+  padding-top: 10px;
+}
+
+.example-form-fields {
+  display: flex;
+  align-items: flex-start;
+}
+
+.example-container mat-form-field + mat-form-field {
+  margin-left: 20px;
+}
+
+.example-container-button button + button {
+  margin-left: 20px;
+}

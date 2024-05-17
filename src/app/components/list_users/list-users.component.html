@@ -1,0 +1,17 @@
+<!-- The AG Grid component -->
+<div class="content" style="width: 100%; height: 100%; text-align: center;">
+  <mat-card>
+    <mat-card-content><b>Users</b></mat-card-content>
+  </mat-card>
+  <div class="example-button-row">
+    <button mat-raised-button color="primary" (click)="showNewUser()">Add User</button>
+  </div>
+  <!-- The AG Grid component, with Dimensions, CSS Theme, Row Data, and Column Definition -->
+      <ag-grid-angular
+        style="width: 100%; height: 100%; text-align: center;"
+        [class]="themeClass"
+        [rowData]="rowData"
+        [columnDefs]="colDefs"
+        [defaultColDef]="defaultColDef">
+      </ag-grid-angular>
+</div>

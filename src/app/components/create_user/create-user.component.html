@@ -1,0 +1,61 @@
+<form class="form-container top-padding" [formGroup]="NewUserForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        New User
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="example-container" style="width: 95%; height: 100%;">
+        <mat-form-field hintLabel="Max 15 characters" style="width: 46%;">
+          <mat-label>Username</mat-label>
+          <input matInput #input maxlength="15" placeholder="Username" formControlName="user_name" id="user_name">
+        </mat-form-field>
+        <mat-form-field style="width: 46%;">
+          <mat-label>First Name</mat-label>
+          <input matInput #input placeholder="First Name" formControlName="first_name" id="first_name">
+        </mat-form-field>
+      </div>
+      <div class="example-container" style="width: 95%; height: 100%;">
+        <mat-form-field style="width: 46%;">
+          <mat-label>Last Name</mat-label>
+          <input matInput #input placeholder="Last Name" formControlName="last_name" id="last_name">
+        </mat-form-field>
+
+        <mat-form-field style="width: 46%;">
+          <mat-label>Enter your email</mat-label>
+          <input matInput
+                type="email"
+                placeholder="pat@example.com"
+                formControlName="email"
+                id="email"
+                required>
+          @if (email.invalid) {
+            <mat-error>{{errorMessage}}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="example-container" style="width: 95%; height: 100%;">
+        <mat-form-field style="width: 46%;">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="user_status" id="user_status">
+            <mat-option value="I">I</mat-option>
+            <mat-option value="A">A</mat-option>
+            <mat-option value="T">T</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 46%;">
+          <mat-label>Department</mat-label>
+          <input matInput #input placeholder="Department" formControlName="department" id="department">
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions style="align-items: flex-end;">
+      <div class="example-container-button" style="width: 95%; height: 100%;">
+        <button type="submit" mat-raised-button color="primary">Save</button>
+        <button type="button" mat-raised-button color="warn" routerLink="/users">Cancel</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
