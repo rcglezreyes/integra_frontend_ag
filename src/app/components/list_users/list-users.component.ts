@@ -45,7 +45,7 @@ export class ListUsersComponent implements OnInit{
   themeClass = 'ag-theme-balham';
 
   // Row Data: The data to be displayed.
-  rowsData: any[] = [];
+  rowData: any[] = [];
 
   // Column Definitions: Defines & controls grid columns.
   colDefs: any[] = [
@@ -59,7 +59,6 @@ export class ListUsersComponent implements OnInit{
     { headerName: 'Department', field: 'department'},
     { field: "operations", cellRenderer: CustomButtonComponent, flex: 1, cellRendererParams: {
       myProp: (params: any) => {
-        console.log(params.data); // <-- Can you try this?
         return params.data;
       }
     }}
@@ -76,8 +75,7 @@ export class ListUsersComponent implements OnInit{
   loadListUsers(): void {
     this.getAll = this.userService.getListUsers().subscribe(
       data => {
-        this.rowsData = data
-
+        this.rowData = data
       }
     );
   }

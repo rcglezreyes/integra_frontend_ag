@@ -2,8 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import {
-  MatDialog,
-  MatDialogRef,
   MatDialogActions,
   MatDialogClose,
   MatDialogTitle,
@@ -12,7 +10,6 @@ import {
 import {MatButtonModule} from '@angular/material/button';
 import { UserService } from '../../service/user.service';
 import { WebRequestService } from '../../web_service/web-request.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-delete',
@@ -27,8 +24,7 @@ import { Router } from '@angular/router';
   ],
   providers: [
     UserService,
-    WebRequestService,
-    { provide: MAT_DIALOG_DATA, useValue: {} }
+    WebRequestService
   ],
   templateUrl: './dialog-delete.component.html',
   styleUrl: './dialog-delete.component.css'
@@ -40,11 +36,11 @@ export class DialogDeleteComponent implements OnInit{
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private userService: UserService,
-    private router: Router,
     @Inject(DOCUMENT) private document: Document
 ) {}
 
   ngOnInit(): void {
+    console.log(this.data)
     this.userName = this.data['user_name'];
     this.userId = this.data['user_id'];
   }

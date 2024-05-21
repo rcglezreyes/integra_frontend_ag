@@ -3,7 +3,7 @@ import { ICellRendererAngularComp } from 'ag-grid-angular'; // Angular Data Grid
 import { ICellRendererParams  } from 'ag-grid-community'; // Column Definition Type Interface
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Router } from '@angular/router';
 import { DialogDeleteComponent } from '../dialog/dialog-delete.component';
 
@@ -34,8 +34,8 @@ export class CustomButtonComponent implements ICellRendererAngularComp {
   }
 
   openDialogDelete(): void {
-    this.dialog.open(DialogDeleteComponent, {
-      data : this.data
-    });
+    let dialogConfig = new MatDialogConfig()
+    dialogConfig.data = this.data
+    this.dialog.open(DialogDeleteComponent, dialogConfig);
   }
 }

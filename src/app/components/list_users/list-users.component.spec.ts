@@ -36,7 +36,7 @@ describe('ListUsersComponent', () => {
 
   it('should show list correctly', () => {
     component.loadListUsers()
-    console.log(component.rowsData.length)
-    expect(component.rowsData.length).toEqual(0);
+    console.log(component.rowData.length)
+    expect(component.rowData.length).toEqual(0);
   });
 });
