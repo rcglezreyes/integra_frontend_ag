@@ -40,7 +40,6 @@ export class DialogDeleteComponent implements OnInit{
 ) {}
 
   ngOnInit(): void {
-    console.log(this.data)
     this.userName = this.data['user_name'];
     this.userId = this.data['user_id'];
   }
