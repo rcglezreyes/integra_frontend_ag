@@ -88,7 +88,6 @@ export class UpdateUserComponent implements OnInit {
   onSubmit() {
     if (this.UpdateUserForm.valid) {
       const formData = this.UpdateUserForm.value;
-      console.log(formData);
       this.updateUser(formData, this.userToUpdate.userId);
     }
   }
