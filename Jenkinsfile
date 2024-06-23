@@ -11,7 +11,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 git credentialsId: env.GIT_CREDENTIALS_ID, url: 'https://github.com/rcglezreyes/integra_frontend_ag.git', branch: 'main'
-                checkout scm
             }
         }
 
