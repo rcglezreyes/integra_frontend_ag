@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // Reemplaza con tus credenciales de Docker Hub en Jenkins
         DOCKER_IMAGE = 'rcglezreyes/angular-app' // Reemplaza con tu imagen Docker
+        DOCKER_REGISTRY = 'MyDockerRegistry'
         GIT_CREDENTIALS_ID = 'github-credentials' // Reemplaza con tus credenciales de GitHub en Jenkins
         NODEJS_HOME = tool name: 'MyNodeInstallation', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Reemplaza con el nombre de la instalación de NodeJS configurada en Jenkins
         PATH = "$NODEJS_HOME/bin:$PATH"
