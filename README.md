@@ -25,3 +25,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Commands to generate certs
+openssl genpkey -algorithm RSA -out certs/privkey.pem -pkeyopt rsa_keygen_bits:2048
+openssl req -new -x509 -key certs/privkey.pem -out certs/fullchain.pem -days 365 -subj "/CN=127.0.0.1"
