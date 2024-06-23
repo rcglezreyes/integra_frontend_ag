@@ -5,6 +5,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // Reemplaza con tus credenciales de Docker Hub en Jenkins
         DOCKER_IMAGE = 'rcglezreyes/angular-app' // Reemplaza con tu imagen Docker
         GIT_CREDENTIALS_ID = 'github-credentials' // Reemplaza con tus credenciales de GitHub en Jenkins
+        PATH = '/usr/local/bin:/usr/bin:/bin'
     }
 
     stages {
