@@ -1,17 +1,22 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // Reemplaza con tus credenciales de Docker Hub en Jenkins
+        DOCKER_IMAGE = 'rcglezreyes/angular-app' // Reemplaza con tu imagen Docker
+        GIT_CREDENTIALS_ID = 'github-credentials' // Reemplaza con tus credenciales de GitHub en Jenkins
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                // Paso para obtener el código fuente del repositorio
+                git credentialsId: env.GIT_CREDENTIALS_ID, url: 'https://github.com/rcglezreyes/integra_frontend_ag.git', branch: 'main'
                 checkout scm
             }
         }
 
-        stage('Build') {
+        stage('Build Angular App') {
             steps {
-                // Instalar dependencias y compilar la aplicación Angular
                 sh 'npm install'
                 sh 'npm run build --prod'
             }
@@ -19,42 +24,34 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // Construir la imagen Docker usando el Dockerfile en el proyecto
                 script {
-                    docker.build("mi-app-angular:${env.BUILD_ID}")
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                // Publicar la imagen Docker en un registro Docker (como Docker Hub)
-                script {
-                    docker.withRegistry('https://registry.example.com', 'docker-hub-credentials') {
-                        dockerImage.push()
+                    docker.withRegistry('', env.DOCKER_CREDENTIALS_ID) {
+                        def app = docker.build("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}")
+                        app.push()
                     }
                 }
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy Docker Container') {
             steps {
-                // Desplegar la imagen Docker en un entorno Docker
                 script {
-                    docker.withRegistry('', 'docker-hub-credentials') {
-                        sh 'docker-compose -f docker-compose.yml up -d'
+                    def containerName = 'angular-app'
+                    try {
+                        sh "docker stop ${containerName}"
+                        sh "docker rm ${containerName}"
+                    } catch (Exception e) {
+                        echo 'Container does not exist or could not be stopped/removed.'
                     }
+                    sh "docker run -d --name ${containerName} -p 80:80 ${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}"
                 }
             }
         }
     }
 
     post {
-        success {
-            echo '¡Despliegue exitoso!'
-        }
-        failure {
-            echo '¡Fallo en el despliegue!'
+        always {
+            cleanWs()
         }
     }
 }
