@@ -6,6 +6,8 @@ pipeline {
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         ANGULAR_APP_NAME = 'angular-app'
         JENKINS_NETWORK = 'app-network'
+        NODEJS_HOME = tool name: 'MyNodeInstallation', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Reemplaza con el nombre de la instalación de NodeJS configurada en Jenkins
+        PATH = "$NODEJS_HOME/bin:$PATH"
     }
 
     triggers {
