@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_TOKEN = 'docker-hub-token'
-        DOCKER_REGISTRY = 'docker.io/rcglezreyes'
+        DOCKER_REPO = 'rcglezreyes/angular-app'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         ANGULAR_APP_NAME = 'angular-app'
         JENKINS_NETWORK = 'app-network'
@@ -32,7 +32,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t ${DOCKER_REGISTRY}/${ANGULAR_APP_NAME}:${IMAGE_TAG} .'
+                    sh 'docker build -t ${DOCKER_REPO}:${IMAGE_TAG} .'
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: env.DOCKER_HUB_TOKEN, variable: 'DOCKER_HUB_TOKEN')]) {
                         sh 'echo $DOCKER_HUB_TOKEN | docker login -u rcglezreyes --password-stdin https://docker.io'
-                        sh 'docker push ${DOCKER_REGISTRY}/${ANGULAR_APP_NAME}:${IMAGE_TAG}'
+                        sh 'docker push ${DOCKER_REPO}:${IMAGE_TAG}'
                     }
                 }
             }
@@ -53,7 +53,7 @@ pipeline {
                     if [ \$(docker ps -a -q --filter "name=${ANGULAR_APP_NAME}") ]; then
                       docker rm -f ${ANGULAR_APP_NAME}
                     fi
-                    docker run -d --name ${ANGULAR_APP_NAME} --network ${JENKINS_NETWORK} -p 4200:80 ${DOCKER_REGISTRY}/${ANGULAR_APP_NAME}:${IMAGE_TAG}
+                    docker run -d --name ${ANGULAR_APP_NAME} --network ${JENKINS_NETWORK} -p 4200:80 ${DOCKER_REPO}:${IMAGE_TAG}
                     """
                 }
             }
