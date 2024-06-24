@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: env.DOCKER_HUB_TOKEN, variable: 'DOCKER_HUB_TOKEN')]) {
-                        sh 'echo $DOCKER_HUB_TOKEN | docker login -u rcglezreyes --password-stdin https://hub.docker.com/'
+                        sh 'echo $DOCKER_HUB_TOKEN | docker login -u rcglezreyes --password-stdin https://index.docker.io/v1/'
                         sh 'docker push ${DOCKER_REPO}:${IMAGE_TAG}'
                     }
                 }
