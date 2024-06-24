@@ -12,7 +12,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // Reemplaza con tus credenciales de Docker Hub en Jenkins
         DOCKER_IMAGE = 'rcglezreyes/angular-app' // Reemplaza con tu imagen Docker
-        DOCKER_REGISTRY = 'registry.example.com'
+        DOCKER_REGISTRY = 'docker.io'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         GIT_CREDENTIALS_ID = 'github-credentials' // Reemplaza con tus credenciales de GitHub en Jenkins
         NODEJS_HOME = tool name: 'MyNodeInstallation', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Reemplaza con el nombre de la instalación de NodeJS configurada en Jenkins
@@ -44,8 +44,8 @@ pipeline {
             // }
             steps {
                 script {
-                    docker.withRegistry('https://${DOCKER_REGISTRY}', '${DOCKER_CREDENTIALS_ID}') {
-                        def app = docker.build("${DOCKER_REGISTRY}/myapp:${IMAGE_TAG}")
+                    docker.withRegistry('https://'env.DOCKER_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
+                        def app = docker.build("${env.DOCKER_REGISTRY}/myapp:${env.IMAGE_TAG}")
                         app.push()
                     }
                 }
