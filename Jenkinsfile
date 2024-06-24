@@ -1,16 +1,19 @@
 pipeline {
-    agent {
-        docker {
-              image 'gcr.io/kaniko-project/executor:latest'
-              args '--privileged --network host'
-              label 'MyDockerRegistry'
-        }
-    }
+    // agent {
+    //     docker {
+    //           image 'gcr.io/kaniko-project/executor:latest'
+    //           args '--privileged --network host'
+    //           label 'MyDockerRegistry'
+    //     }
+    // }
+
+    agent any
 
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // Reemplaza con tus credenciales de Docker Hub en Jenkins
         DOCKER_IMAGE = 'rcglezreyes/angular-app' // Reemplaza con tu imagen Docker
-        // DOCKER_REGISTRY = 'https://hub.docker.com/'
+        DOCKER_REGISTRY = 'registry.example.com'
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
         GIT_CREDENTIALS_ID = 'github-credentials' // Reemplaza con tus credenciales de GitHub en Jenkins
         NODEJS_HOME = tool name: 'MyNodeInstallation', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Reemplaza con el nombre de la instalación de NodeJS configurada en Jenkins
         PATH = "$NODEJS_HOME/bin:$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/bin/docker"
@@ -40,8 +43,10 @@ pipeline {
             //     }
             // }
             steps {
-                script {
-                    sh '/kaniko/executor --context . --dockerfile Dockerfile --destination rcglezreyes/angular-app:${BUILD_NUMBER}'
+                container('kaniko') {
+                    script {
+                        sh '/kaniko/executor --context . --dockerfile Dockerfile --destination ${DOCKER_REGISTRY}/myapp:${IMAGE_TAG}'
+                    }
                 }
             }
         }
