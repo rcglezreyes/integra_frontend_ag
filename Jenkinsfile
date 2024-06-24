@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+              image 'gcr.io/kaniko-project/executor:latest'
+              args '--privileged --network host'
+        }
+    }
 
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // Reemplaza con tus credenciales de Docker Hub en Jenkins
@@ -25,12 +30,17 @@ pipeline {
         }
 
         stage('Build Docker Image') {
+            // steps {
+            //     script {
+            //         docker.withRegistry('', env.DOCKER_CREDENTIALS_ID) {
+            //             def app = docker.build("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}")
+            //             app.push()
+            //         }
+            //     }
+            // }
             steps {
                 script {
-                    docker.withRegistry('', env.DOCKER_CREDENTIALS_ID) {
-                        def app = docker.build("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}")
-                        app.push()
-                    }
+                    sh '/kaniko/executor --context . --dockerfile Dockerfile --destination rcglezreyes/angular-app:${BUILD_NUMBER}'
                 }
             }
         }
