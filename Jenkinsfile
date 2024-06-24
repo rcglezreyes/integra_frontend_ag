@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-credentials-id'
+        DOCKER_HUB_TOKEN = 'docker-hub-token'
         DOCKER_REGISTRY = 'docker.io'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         ANGULAR_APP_NAME = 'angular-app'
@@ -39,7 +39,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry("https://${env.DOCKER_REGISTRY}", env.DOCKER_CREDENTIALS_ID) {
+                    withCredentials([string(credentialsId: env.DOCKER_HUB_TOKEN, variable: 'DOCKER_HUB_TOKEN')]) {
+                        sh 'echo $DOCKER_HUB_TOKEN | docker login -u rcglezreyes --password-stdin https://docker.io'
                         sh 'docker push ${DOCKER_REGISTRY}/${ANGULAR_APP_NAME}:${IMAGE_TAG}'
                     }
                 }
