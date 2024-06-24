@@ -62,7 +62,7 @@ pipeline {
 
     post {
         success {
-            echo "Aplicación Angular desplegada exitosamente en ${DOCKER_REGISTRY}/${ANGULAR_APP_NAME}:${IMAGE_TAG}"
+            echo "Aplicación Angular desplegada exitosamente en ${DOCKER_REPO}/${ANGULAR_APP_NAME}:${IMAGE_TAG}"
         }
         failure {
             echo "Fallo en el despliegue de la aplicación Angular."
