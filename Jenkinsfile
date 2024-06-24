@@ -39,7 +39,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: env.DOCKER_HUB_TOKEN, variable: 'DOCKER_HUB_TOKEN')]) {
+                    withCredentials([string(credentialsId: DOCKER_HUB_TOKEN, variable: 'DOCKER_HUB_TOKEN')]) {
                         sh 'echo $DOCKER_HUB_TOKEN | docker login -u rcglezreyes --password-stdin https://index.docker.io/v1/'
                         sh 'docker push ${DOCKER_REPO}:${IMAGE_TAG}'
                     }
@@ -62,7 +62,7 @@ pipeline {
 
     post {
         success {
-            echo "Aplicación Angular desplegada exitosamente en ${DOCKER_REPO}/${ANGULAR_APP_NAME}:${IMAGE_TAG}"
+            echo "Aplicación Angular desplegada exitosamente en ${DOCKER_REPO}:${IMAGE_TAG}"
         }
         failure {
             echo "Fallo en el despliegue de la aplicación Angular."
