@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-credentials-id'
-        DOCKER_REGISTRY = 'docker.io'  // Cambia a tu URL del registro Docker
+        DOCKER_REGISTRY = 'docker.io'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         ANGULAR_APP_NAME = 'angular-app'
         JENKINS_NETWORK = 'app-network'
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     sh 'npm install'
-                    sh 'npm run build --prod'
+                    sh 'npm run build --omit=dev'
                 }
             }
         }

@@ -1,25 +1,3 @@
-
-# # Usar una imagen de Node.js para desarrollar y servir la aplicación
-# FROM node:22-alpine
-
-# # Establecer el directorio de trabajo
-# WORKDIR /app
-
-# # Copiar el package.json y el package-lock.json
-# COPY package*.json ./
-
-# # Instalar las dependencias de Node.js
-# RUN npm install
-
-# # Copiar el resto de los archivos de la aplicación
-# COPY . .
-
-# # Exponer el puerto 4200
-# EXPOSE 4200
-
-# # Comando para ejecutar ng serve
-# CMD ["npm", "start"]
-
 # Utiliza una imagen de Node.js para construir la aplicación Angular
 FROM node:22-alpine AS build
 
