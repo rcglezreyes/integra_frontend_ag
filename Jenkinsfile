@@ -43,9 +43,10 @@ pipeline {
             //     }
             // }
             steps {
-                container('kaniko') {
-                    script {
-                        sh '/kaniko/executor --context . --dockerfile Dockerfile --destination ${DOCKER_REGISTRY}/myapp:${IMAGE_TAG}'
+                script {
+                    docker.withRegistry('https://${DOCKER_REGISTRY}', '${DOCKER_CREDENTIALS_ID}') {
+                        def app = docker.build("${DOCKER_REGISTRY}/myapp:${IMAGE_TAG}")
+                        app.push()
                     }
                 }
             }
