@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        DOCKER_CREDENTIALS_ID = 'docker-credentials-id'
         DOCKER_REGISTRY = 'docker.io'  // Cambia a tu URL del registro Docker
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         ANGULAR_APP_NAME = 'angular-app'
@@ -38,7 +39,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry("https://${env.DOCKER_REGISTRY}", 'docker-credentials-id') {
+                    docker.withRegistry("https://${env.DOCKER_REGISTRY}", env.DOCKER_CREDENTIALS_ID) {
                         sh 'docker push ${DOCKER_REGISTRY}/${ANGULAR_APP_NAME}:${IMAGE_TAG}'
                     }
                 }
