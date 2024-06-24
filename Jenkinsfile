@@ -3,6 +3,7 @@ pipeline {
         docker {
               image 'gcr.io/kaniko-project/executor:latest'
               args '--privileged --network host'
+              label 'MyDockerRegistry'
         }
     }
 
