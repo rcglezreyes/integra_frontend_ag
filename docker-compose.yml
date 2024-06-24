@@ -5,6 +5,7 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker  # Montar el ejecutable de Docker del host
     environment:
       - DOCKER_HOST=tcp://docker:2375
     ports:
