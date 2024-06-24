@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_TOKEN = 'docker-hub-token'
-        DOCKER_REGISTRY = 'docker.io'
+        DOCKER_REGISTRY = 'docker.io/rcglezreyes'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         ANGULAR_APP_NAME = 'angular-app'
         JENKINS_NETWORK = 'app-network'
