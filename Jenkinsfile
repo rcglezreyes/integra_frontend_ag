@@ -44,8 +44,8 @@ pipeline {
             // }
             steps {
                 script {
-                    docker.withRegistry('https://'env.DOCKER_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
-                        def app = docker.build("${env.DOCKER_REGISTRY}/myapp:${env.IMAGE_TAG}")
+                    docker.withRegistry("https://${env.DOCKER_REGISTRY}", env.DOCKER_CREDENTIALS_ID) {
+                        def app = docker.build("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.IMAGE_TAG}")
                         app.push()
                     }
                 }
