@@ -2,13 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_TOKEN = 'docker-hub-token'
-        DOCKER_REPO = 'rcglezreyes/angular-app'
+        DOCKER_REPO = 'rcglezreyes/angular-app'  // Actualiza esto con tu nombre de usuario y nombre del repositorio
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         ANGULAR_APP_NAME = 'angular-app'
-        JENKINS_NETWORK = 'app-network'
-        NODEJS_HOME = tool name: 'MyNodeInstallation', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Reemplaza con el nombre de la instalación de NodeJS configurada en Jenkins
-        PATH = "$NODEJS_HOME/bin:$PATH"
     }
 
     triggers {
@@ -21,14 +17,6 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build Angular App') {
-            steps {
-                script {
-                    sh 'npm install'
-                    sh 'npm run build --omit=dev'
-                }
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -39,7 +27,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: DOCKER_HUB_TOKEN, variable: 'DOCKER_HUB_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_HUB_TOKEN')]) {
                         sh 'echo $DOCKER_HUB_TOKEN | docker login -u rcglezreyes --password-stdin https://index.docker.io/v1/'
                         sh 'docker push ${DOCKER_REPO}:${IMAGE_TAG}'
                     }
@@ -49,12 +37,16 @@ pipeline {
         stage('Deploy Angular App') {
             steps {
                 script {
+                    // Actualizar el archivo docker-compose.override.yml para usar la nueva imagen
                     sh """
-                    if [ \$(docker ps -a -q --filter "name=${ANGULAR_APP_NAME}") ]; then
-                      docker rm -f ${ANGULAR_APP_NAME}
-                    fi
-                    docker run -d --name ${ANGULAR_APP_NAME} --network ${JENKINS_NETWORK} -p 4200:80 ${DOCKER_REPO}:${IMAGE_TAG}
+                    echo 'version: "3"' > docker-compose.override.yml
+                    echo 'services:' >> docker-compose.override.yml
+                    echo '  angular-app:' >> docker-compose.override.yml
+                    echo '    image: ${DOCKER_REPO}:${IMAGE_TAG}' >> docker-compose.override.yml
                     """
+
+                    // Usar Docker Compose para actualizar el contenedor
+                    sh 'docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d'
                 }
             }
         }
