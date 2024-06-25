@@ -7,6 +7,8 @@ pipeline {
         ANGULAR_APP_NAME = 'angular-app'
     }
 
+    // Trigger action when Webhook activates
+
     triggers {
         githubPush()
     }
